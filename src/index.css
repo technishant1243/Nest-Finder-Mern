@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #1a1a2e;
+  --color-ink-light: #2d2d4e;
+  --color-warm: #f5f0e8;
+  --color-warm-dark: #e8dcc8;
+  --color-gold: #c9952a;
+  --color-gold-light: #f0c96a;
+  --color-gold-pale: #fdf3dc;
+  --color-sage: #4a7c59;
+  --color-sage-light: #e8f5e9;
+  --color-rust: #c0392b;
+  --color-plum: #6c3d91;
+  --color-muted: #7a7a8c;
+  --color-border: #e2ddd5;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body { font-family: var(--font-body); background-color: var(--color-warm); color: var(--color-ink); margin: 0; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-warm); }
+::-webkit-scrollbar-thumb { background: var(--color-warm-dark); border-radius: 3px; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.96) translateY(16px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.animate-fadeUp    { animation: fadeUp 0.45s ease both; }
+.animate-slideDown { animation: slideDown 0.3s ease both; }
+.animate-toastIn   { animation: toastIn 0.35s ease both; }
+.animate-modalIn   { animation: modalIn 0.3s ease both; }
+.animate-pulse-dot { animation: pulse-dot 1.5s ease-in-out infinite; }
+
+.delay-0   { animation-delay: 0ms; }
+.delay-80  { animation-delay: 80ms; }
+.delay-160 { animation-delay: 160ms; }
+.delay-240 { animation-delay: 240ms; }
+.delay-320 { animation-delay: 320ms; }
+.delay-400 { animation-delay: 400ms; }
+
+input[type="range"]    { accent-color: var(--color-gold); }
+input[type="checkbox"] { accent-color: var(--color-gold); }
