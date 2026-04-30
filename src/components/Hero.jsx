@@ -1,13 +1,17 @@
-import { CITIES } from '../data/properties'
+// import { CITIES } from '../data/properties'
+import { useFetch } from '../hooks/useFetch'
 
 const STATS = [
   { num: '50K+', label: 'Properties' },
   { num: '120+', label: 'Cities' },
-  { num: '6',    label: 'Sources' },
+  { num: '6', label: 'Sources' },
   { num: '4.8★', label: 'Rating' },
 ]
 
 export default function Hero({ onSearch }) {
+
+  let { loading, data: CITIES } = useFetch("http://localhost:5000/cities")
+
   return (
     <section className="relative bg-[var(--color-ink)] pt-20 pb-12 px-6 overflow-hidden">
       <div
@@ -30,7 +34,7 @@ export default function Hero({ onSearch }) {
           <div className="flex flex-col gap-1.5">
             <label className="text-[10px] font-bold text-[var(--color-muted)] uppercase tracking-widest">City</label>
             <select className="w-full border border-[var(--color-border)] rounded-lg px-3 py-2.5 text-sm font-medium text-[var(--color-ink)] bg-white appearance-none focus:outline-none focus:border-[var(--color-gold)] transition-colors cursor-pointer">
-              {CITIES.map(c => <option key={c}>{c}</option>)}
+              {CITIES?.map(c => <option key={c}>{c}</option>)}
             </select>
           </div>
           <div className="flex flex-col gap-1.5">

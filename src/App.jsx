@@ -7,7 +7,7 @@ import PropertyCard from './components/PropertyCard'
 import PropertyModal from './components/PropertyModal'
 import Toast from './components/Toast'
 import { useToast } from './hooks/useToast'
-import { PROPERTIES } from './data/properties'
+import { useFetch } from './hooks/useFetch'
 
 const PAGES = [1, 2, 3, 4, 5]
 
@@ -18,8 +18,13 @@ export default function App() {
   const [sortBy, setSortBy] = useState('relevance')
   const { toast, showToast } = useToast()
 
+  let { loading, data: PROPERTIES=[] } = useFetch("http://localhost:5000/properties")
+  console.log(PROPERTIES);
+
   const filtered = useMemo(() => {
     let list = [...PROPERTIES]
+    console.log(list);
+
     if (activeChip !== 'All') {
       const chip = activeChip.toLowerCase()
       list = list.filter(p =>
@@ -29,11 +34,12 @@ export default function App() {
       )
     }
     return list
-  }, [activeChip])
+
+  }, [activeChip, loading])
 
   function handleSearch() {
     showToast('🔍 Searching across Housing.com, Magicbricks & 99acres…')
-    setTimeout(() => showToast(`✅ Found ${filtered.length} properties!`), 1200)
+    setTimeout(() => showToast(`✅ Found ${filtered?.length} properties!`), 1200)
   }
 
   function handleChip(chip) {
@@ -62,7 +68,7 @@ export default function App() {
           {/* Header */}
           <div className="flex items-center justify-between mb-5">
             <div className="font-[var(--font-display)] text-2xl font-bold">
-              <span className="text-[var(--color-gold)]">{filtered.length}</span> Properties Found
+              <span className="text-[var(--color-gold)]">{filtered?.length}</span> Properties Found
             </div>
             <div className="flex items-center gap-3">
               <select
@@ -79,11 +85,10 @@ export default function App() {
                 {['⊞', '☰'].map((icon, i) => (
                   <button
                     key={icon}
-                    className={`w-9 h-9 rounded-lg border text-sm flex items-center justify-center cursor-pointer transition-all duration-200 ${
-                      i === 0
-                        ? 'bg-[var(--color-ink)] border-[var(--color-ink)] text-white'
-                        : 'bg-white border-[var(--color-border)] text-[var(--color-ink)] hover:bg-[var(--color-ink)] hover:border-[var(--color-ink)] hover:text-white'
-                    }`}
+                    className={`w-9 h-9 rounded-lg border text-sm flex items-center justify-center cursor-pointer transition-all duration-200 ${i === 0
+                      ? 'bg-[var(--color-ink)] border-[var(--color-ink)] text-white'
+                      : 'bg-white border-[var(--color-border)] text-[var(--color-ink)] hover:bg-[var(--color-ink)] hover:border-[var(--color-ink)] hover:text-white'
+                      }`}
                   >
                     {icon}
                   </button>
@@ -122,11 +127,10 @@ export default function App() {
               <button
                 key={p}
                 onClick={() => { setActivePage(p); showToast(`Page ${p}`) }}
-                className={`w-9 h-9 rounded-lg border text-sm flex items-center justify-center cursor-pointer font-medium transition-all duration-200 ${
-                  activePage === p
-                    ? 'bg-[var(--color-ink)] border-[var(--color-ink)] text-white'
-                    : 'bg-white border-[var(--color-border)] text-[var(--color-ink)] hover:bg-[var(--color-ink)] hover:text-white hover:border-[var(--color-ink)]'
-                }`}
+                className={`w-9 h-9 rounded-lg border text-sm flex items-center justify-center cursor-pointer font-medium transition-all duration-200 ${activePage === p
+                  ? 'bg-[var(--color-ink)] border-[var(--color-ink)] text-white'
+                  : 'bg-white border-[var(--color-border)] text-[var(--color-ink)] hover:bg-[var(--color-ink)] hover:text-white hover:border-[var(--color-ink)]'
+                  }`}
               >
                 {p}
               </button>
